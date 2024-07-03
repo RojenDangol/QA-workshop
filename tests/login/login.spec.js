@@ -15,9 +15,7 @@ test.describe("Valid Login tests", () => {
     const login = new LoginPage(page);
     await login.login(testData.validUser.username, testData.validUser.password);
 
-    await expect(
-      page.locator('//*[@id="loop-container"]/div/article/div[1]/h1')
-    ).toHaveText("Logged In Successfully");
+    await login.verifyValidLogin();
   });
 });
 
@@ -29,9 +27,7 @@ test.describe("Invalid Login Test", () => {
       testData.invalidUserPass.password
     );
 
-    await expect(page.locator('//*[@id="error"]')).toHaveText(
-      "Your username is invalid!"
-    );
+    await login.invalidLogin("Your username is invalid!");
   });
 
   test("valid username invalid password", async ({ page }) => {
@@ -40,10 +36,7 @@ test.describe("Invalid Login Test", () => {
       testData.invalidPass.username,
       testData.invalidPass.password
     );
-
-    await expect(page.locator('//*[@id="error"]')).toHaveText(
-      "Your password is invalid!"
-    );
+    await login.invalidLogin("Your password is invalid!");
   });
 
   test("invalid username valid password", async ({ page }) => {
@@ -52,39 +45,30 @@ test.describe("Invalid Login Test", () => {
       testData.invalidUsern.username,
       testData.invalidUsern.password
     );
-
-    await expect(page.locator('//*[@id="error"]')).toHaveText(
-      "Your username is invalid!"
-    );
+    await login.invalidLogin("Your username is invalid!");
   });
 
-  test("no username no password", async ({ page }) => {
+  test("empty username empty password", async ({ page }) => {
     const login = new LoginPage(page);
     await login.login(
       testData.noUserPass.username,
       testData.noUserPass.password
     );
 
-    await expect(page.locator('//*[@id="error"]')).toHaveText(
-      "Your username is invalid!"
-    );
+    await login.invalidLogin("Your username is invalid!");
   });
 
-  test("no username valid password", async ({ page }) => {
+  test("empty username valid password", async ({ page }) => {
     const login = new LoginPage(page);
     await login.login(testData.noUser.username, testData.noUser.password);
 
-    await expect(page.locator('//*[@id="error"]')).toHaveText(
-      "Your username is invalid!"
-    );
+    await login.invalidLogin("Your username is invalid!");
   });
 
-  test("valid username no password", async ({ page }) => {
+  test("valid username empty password", async ({ page }) => {
     const login = new LoginPage(page);
     await login.login(testData.noPass.username, testData.noPass.password);
 
-    await expect(page.locator('//*[@id="error"]')).toHaveText(
-      "Your password is invalid!"
-    );
+    await login.invalidLogin("Your password is invalid!");
   });
 });

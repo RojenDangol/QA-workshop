@@ -1,0 +1,30 @@
+{
+  "validUser": {
+    "username": "student",
+    "password": "Password123"
+  },
+  "invalidUserPass": {
+    "username": "students",
+    "password": "Password1234"
+  },
+  "invalidPass": {
+    "username": "student",
+    "password": "Password1234"
+  },
+  "invalidUsern": {
+    "username": "students",
+    "password": "Password123"
+  },
+  "noUserPass": {
+    "username": "",
+    "password": ""
+  },
+  "noUser": {
+    "username": "",
+    "password": "Password123"
+  },
+  "noPass": {
+    "username": "student",
+    "password": ""
+  }
+}
