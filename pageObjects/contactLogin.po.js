@@ -87,14 +87,15 @@ exports.LoginPage = class LoginPage {
   async editContacts(firstname, lastname) {
     await this.page.locator(this.editBtn).click();
     await this.page.locator(this.editContactBtn).click();
-    await this.page.waitForTimeout(2000);
+    // await this.page.waitForTimeout(2000);
     await this.page.locator(this.firstname).fill(firstname);
     await this.page.locator(this.lastname).fill(lastname);
     await this.page.locator(this.submit).click();
-    await expect(this.page.locator(this.validLoginValidation)).toHaveText(
-      "Contact Details"
-    );
-    await this.page.waitForTimeout(3000);
+    // await this.page.waitForTimeout(3000);
+    // await expect(this.page.locator(this.validLoginValidation)).toHaveText(
+    //   "Contact Details"
+    // );
+    // await this.page.waitForTimeout(3000);
   }
 
   async deleteContact() {

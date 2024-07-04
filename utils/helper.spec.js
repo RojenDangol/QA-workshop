@@ -1,3 +1,4 @@
+const { expect } = require("@playwright/test");
 // export async function TodayDate() {
 //   const now = new Date();
 //   const year = now.getFullYear();
@@ -7,11 +8,11 @@
 
 async function authenticateUser1({ request }) {
   try {
-    const apiUrl = await "https://thinking-tester-contact-list.herokuapp.com";
+    const apiUrl = "https://thinking-tester-contact-list.herokuapp.com/";
     const headers = {
       "Content-Type": "application/json",
     };
-    const response = await request.post((apiUrl = "/users/login"), {
+    const response = await request.post(apiUrl + "users/login", {
       headers,
       data: {
         email: "rojendangol1@gmail.com",
@@ -34,7 +35,7 @@ async function authenticateUser1({ request }) {
   }
 }
 async function createEntity(userData, accessToken, module, { request }) {
-  const apiUrl = "https://thinking-tester-contact-list.herokuapp.com";
+  const apiUrl = "https://thinking-tester-contact-list.herokuapp.com/";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",

@@ -2,7 +2,10 @@ const { test, expect } = require("@playwright/test");
 const testData = require("../../fixture/login.json");
 const contactData = require("../../fixture/contact.json");
 const { LoginPage } = require("../../pageObjects/contactLogin.po");
-const { createEntity, authenticateUser1 } = require("../../utils/helper.spec");
+const {
+  createEntity,
+  authenticateUser1,
+} = require("../../utils/helper.spec.js");
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
@@ -59,12 +62,12 @@ test.describe("Crud Operation", () => {
     );
   });
 
-  test("Edit contact test", async ({ context, page, request }) => {
-    await page.waitForTimeout(3000);
+  test.only("Edit contact test", async ({ context, page, request }) => {
+    // await page.waitForTimeout(3000);
     const login = new LoginPage(page);
-    const Data = { firstname: "hello", lastname: "world" };
+    const Data = { firstName: "hello", lastName: "world" };
     const accessToken = await authenticateUser1({ request });
-    const entityId = await createEntity(Data, accessToken, "/contacts", {
+    const entityId = await createEntity(Data, accessToken, "contacts", {
       request,
     });
     await intercept(
@@ -72,26 +75,29 @@ test.describe("Crud Operation", () => {
       { context, page }
     );
     page.reload();
-    await waitForTimeout(5000);
-    await contact.contactEdit();
-    await page.waitForTimeout(5000);
+    page.waitForTimeout(3000);
+    // await contact.contactEdit();
+    // await page.waitForTimeout(5000);
     await login.editContacts(
       contactData.updateName.ufname,
       contactData.updateName.ulname
     );
+    // await page.waitForTimeout(3000);
+    // await deleteEntity(accessToken, "/contacts/$(interceptId)");
   });
+
+  async function intercept(module, { context, page }) {
+    await context.route(module, async (route) => {
+      await route.continue();
+      const response = await page.waitForResponse(module);
+      page.waitForTimeout(3000);
+      const responseBody = await response.json();
+      interceptId = responseBody._id;
+    });
+  }
 
   test("Delete contact", async ({ page }) => {
     const login = new LoginPage(page);
     await login.deleteContact();
   });
 });
-
-async function intercept(module, { context, page }) {
-  await context.route(module, async (route) => {
-    await route.continue();
-    const response = await page.waitForResponse(module);
-    const responseBody = await response.json();
-    interceptId = responseBody._id;
-  });
-}
