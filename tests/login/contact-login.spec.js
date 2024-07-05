@@ -7,6 +7,8 @@ const {
   authenticateUser1,
 } = require("../../utils/helper.spec.js");
 
+let interceptId;
+
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
 
@@ -82,22 +84,25 @@ test.describe("Crud Operation", () => {
       contactData.updateName.ufname,
       contactData.updateName.ulname
     );
-    // await page.waitForTimeout(3000);
-    // await deleteEntity(accessToken, "/contacts/$(interceptId)");
-  });
-
-  async function intercept(module, { context, page }) {
-    await context.route(module, async (route) => {
-      await route.continue();
-      const response = await page.waitForResponse(module);
-      page.waitForTimeout(3000);
-      const responseBody = await response.json();
-      interceptId = responseBody._id;
+    //await page.waitForTimeout(3000);
+    await deleteEntity(accessToken, "/contacts/$(interceptId)", { request });
+    await validateEntity(accessToken, "/contacts/$(interceptId)", "404", {
+      request,
     });
-  }
+  });
 
   test("Delete contact", async ({ page }) => {
     const login = new LoginPage(page);
     await login.deleteContact();
   });
 });
+
+async function intercept(module, { context, page }) {
+  await context.route(module, async (route) => {
+    await route.continue();
+    const response = await page.waitForResponse(module);
+    page.waitForTimeout(2000);
+    const responseBody = await response.json();
+    interceptId = responseBody._id;
+  });
+}

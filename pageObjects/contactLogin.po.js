@@ -26,7 +26,8 @@ exports.LoginPage = class LoginPage {
     this.submit = '//*[@id="submit"]';
     this.cancel = '//*[@id="cancel"]';
 
-    this.editBtn = '//*[@id="myTable"]/tr[1]';
+    // this.editBtn = '//*[@id="myTable"]/tr[1]';
+    this.editBtn = '(//td[contains(text(),"hello world")])';
     this.editContactBtn = '//*[@id="edit-contact"]';
 
     this.deleteContactBtn = '//*[@id="delete"]';

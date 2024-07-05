@@ -55,4 +55,5 @@ async function createEntity(userData, accessToken, module, { request }) {
     return null;
   }
 }
+
 module.exports = { authenticateUser1, createEntity };
