@@ -56,4 +56,19 @@ async function createEntity(userData, accessToken, module, { request }) {
   }
 }
 
-module.exports = { authenticateUser1, createEntity };
+async function deleteEntity(accessToken, module, { request }) {
+  const apiUrl = "https://thinking-tester-contact-list.herokuapp.com/";
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    authorization: "Bearer " + accessToken,
+  };
+  const response = await request.delete(apiUrl + module, {
+    headers,
+  });
+  console.log("##################" + JSON.stringify(response));
+  const statusCode = response.status();
+  expect(statusCode).toBe(200);
+}
+
+module.exports = { authenticateUser1, createEntity, deleteEntity };

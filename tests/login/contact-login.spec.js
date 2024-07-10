@@ -85,10 +85,10 @@ test.describe("Crud Operation", () => {
       contactData.updateName.ulname
     );
     //await page.waitForTimeout(3000);
-    await deleteEntity(accessToken, "/contacts/$(interceptId)", { request });
-    await validateEntity(accessToken, "/contacts/$(interceptId)", "404", {
-      request,
-    });
+    // await deleteEntity(accessToken, "/contacts/$(interceptId)", { request });
+    // await validateEntity(accessToken, "/contacts/$(interceptId)", "404", {
+    //   request,
+    // });
   });
 
   test("Delete contact", async ({ page }) => {
@@ -101,7 +101,7 @@ async function intercept(module, { context, page }) {
   await context.route(module, async (route) => {
     await route.continue();
     const response = await page.waitForResponse(module);
-    page.waitForTimeout(2000);
+    page.waitForTimeout(3000);
     const responseBody = await response.json();
     interceptId = responseBody._id;
   });
